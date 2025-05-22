@@ -32,10 +32,6 @@ Il microservizio è responsabile della gestione delle richieste di supporto da p
 | Database               | MySQL 8                      | Memorizzazione dei ticket, utenti, messaggi e storico                |
 | Documentazione API     | Swagger / Springdoc OpenAPI  | Generazione automatica e interattiva della documentazione REST      |
 | Messaggistica / Eventi | RabbitMQ                     | Invio asincrono di notifiche e comunicazione con altri microservizi  |
-| Contenitore / Deploy   | Docker                       | Containerizzazione per deploy semplice e scalabile                   |
-| Monitoraggio           | Spring Actuator *(opzionale)*| Health check, metriche e debug                                       |
-| Backup DB / Sicurezza  | AWS RDS Snapshot o `mysqldump` | Backup automatico e disaster recovery                                |
-
 ---
 
 ## Dipendenze con Altri Microservizi
