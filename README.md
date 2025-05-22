@@ -112,3 +112,102 @@ Il microservizio è responsabile della gestione delle richieste di supporto da p
 | comment          | Commento associato alla modifica                   |
 
 ---
+## Documentazione API 
+
+---
+
+### Gestione Ticket  
+**Obiettivo**: Gestire i ticket creati da studenti e docenti e gestiti da operatori.
+
+```java
+########## 1. Creazione nuovo Ticket ##########
+# @func : createTicket()
+# @param: TicketRequest ticketRequest 
+# @return: ResponseEntity<TicketResponse>
+POST /api/v1/tickets
+
+########## 2. Elenco dei ticket dell'utente loggato ##########
+# @func: getMyTickets()
+# @param: String externalUserId
+# @return: ResponseEntity<List<TicketResponse>>
+GET /api/v1/tickets
+
+########## 3. Dettagli di un singolo ticket ##########
+# @func: getTicketById()
+# @param: Long id
+# @return: ResponseEntity<TicketResponse>
+GET /api/v1/tickets/{id}
+
+########## 4. Assegnazione ticket a un operatore ##########
+# @func: assignTicketToOperator()
+# @param: Long ticketId, String operatorId
+# @return: ResponseEntity<Void>
+PUT /api/v1/tickets/{ticketId}/assegna
+
+########## 5. Cambio stato del ticket ##########
+# @func: updateTicketStatus()
+# @param: Long ticketId, TicketStatusUpdateRequest request
+# @return: ResponseEntity<Void>
+PUT /api/v1/tickets/{ticketId}/stato
+
+########## 6. Cronologia modifiche del ticket ##########
+# @func: getTicketHistory()
+# @param: Long ticketId
+# @return: ResponseEntity<List<TicketHistoryResponse>>
+GET /api/v1/tickets/{ticketId}/storico
+```
+
+### Gestione Messaggi  
+**Obiettivo**: Permettere la comunicazione tra utenti e operatori all'interno dei ticket.
+
+```java
+########## 1. Invio nuovo messaggio all'interno del ticket ##########
+# @func: sendMessage()
+# @param: MessageRequest messageRequest
+# @return: ResponseEntity<MessageResponse>
+POST /api/v1/tickets/{ticketId}/messaggi
+
+########## 2. Elenco dei messaggi di un ticket ##########
+# @func: getMessagesByTicket()
+# @param: Long ticketId
+# @return: ResponseEntity<List<MessageResponse>>
+GET /api/v1/tickets/{ticketId}/messaggi
+```
+
+### Gestione Notifiche 
+**Obiettivo**: Gestire la notificazione di stati e messaggi relativi ai ticket.
+```java
+########## 1. Elenco notifiche per l'utente autenticato ##########
+# @func: getUserNotifications()
+# @param: String externalUserId
+# @return: ResponseEntity<List<NotificationResponse>>
+GET /api/v1/notifiche
+
+########## 2. Segna una notifica come letta ##########
+# @func: markNotificationAsRead()
+# @param: Long notificationId
+# @return: ResponseEntity<Void>
+PUT /api/v1/notifiche/{notificationId}/lettura
+
+########## 3. Crea una nuova notifica ##########
+# @func: createNotification()
+# @param: NotificationRequest notificationRequest
+# @return: ResponseEntity<NotificationResponse>
+POST /api/v1/notifiche
+```
+
+### Storico Ticket
+**Obiettivo**: Tracciare i cambiamenti di stato dei ticket
+```java
+########## 1. Ottenere lo storico delle modifiche di un ticket ##########
+# @func: getTicketHistory()
+# @param: Long ticketId
+# @return: ResponseEntity<List<TicketHistoryResponse>>
+GET /api/v1/tickets/{ticketId}/storico
+
+########## 2. Api interna che aggiorna lo stato delle richieste ##########
+# @func: addTicketHistory()
+# @param: TicketHistoryRequest historyRequest
+# @return: ResponseEntity<TicketHistoryResponse>
+POST /api/v1/tickets/{ticketId}/storico
+```
