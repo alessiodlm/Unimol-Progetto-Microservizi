@@ -1,0 +1,293 @@
+{
+	"info": {
+		"_postman_id": "a8442a2e-1e83-4485-8a1a-90bdba8cb9a2",
+		"name": "Help Desk API",
+		"description": "Collection per testare tutte le API del microservizio Help Desk",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45567728",
+		"_collection_link": "https://alessio-6703195.postman.co/workspace/d69d6804-06f3-476c-84a6-d7e0ff177189/collection/45567728-a8442a2e-1e83-4485-8a1a-90bdba8cb9a2?action=share&source=collection_link&creator=45567728"
+	},
+	"item": [
+		{
+			"name": "Creazione nuovo Ticket",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxNzg2NjYiLCJpYXQiOjE3NDk5NzM3NTcsImV4cCI6MTc0OTk3NzM1NywidXNlcm5hbWUiOiJTdXBlckFkbWluIiwicm9sZSI6ImFkbWluIn0.ZyGmqPmrRuNE2pvsoHw2lsMB8w7qi4-YgQ3xvqZtK6rwybnOJENI_veYvfja3bV8Johfwf7wIsDhcccheMZ1jlJzRILbv2JPMwynuvNP8Q0OyNZuibkecwZBqTRyE4UBpG8vA90xsPMWQwo02bgrnc9jKSEmLftLo0ZOiiInEA3znvuY6XomJdO-jEekIxAnquU9Jo6GbHCiNPKDLCAbtBuxlGLhCbXBzAtugjg9FHwPiSM510IdgVUvB9ZABIxQXZbscjb6rhsifyP_0H4TaCRV3Ks92HzKmeqdLx4DjRnjWodlvuDd-Ne0XqTufdJ30_f4BThkRvehMoAV0m-qgQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer <TOKEN>",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"titolo\": \"Problema con il login\",\n    \"descrizione\": \"Non riesco ad accedere con le mie credenziali\",\n    \"categoria\": \"LOGIN\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/tickets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"tickets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Elenco ticket utente loggato",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer <TOKEN>",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/tickets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"tickets"
+					]
+				},
+				"description": "Tale richiesta viene effettuata mediante token fornito dallo stub \"Utenti e Ruoli\". Poichè lo stesso token è collegato in maniera statica ad un fisso output con id diverso da quello che si può estrarre dal token, è stato estratto il corretto id dal token e realizzata una demo nel database creando user e ticket. Sostanzialmente, l'output della chiamata non fa riferimento al ticket postato con la precedente api, ma ad 'un altro il cui id è quello estraibile dal token."
+			},
+			"response": []
+		},
+		{
+			"name": "Dettagli singolo ticket",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer <TOKEN>",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/tickets/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"tickets",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assegna ticket a operatore",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer <TOKEN>",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"operatorId\": \"operator-456\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/tickets/11/assegna",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"tickets",
+						"11",
+						"assegna"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cambio stato del ticket",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer <TOKEN>",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"stato\": \"CHIUSO\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/tickets/11/stato",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"tickets",
+						"11",
+						"stato"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cronologia modifiche ticket",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer <TOKEN>",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/tickets/11/storico",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"tickets",
+						"11",
+						"storico"
+					]
+				},
+				"description": "Questa API darà risposte sensate per gli id: 9-11-16-23"
+			},
+			"response": []
+		},
+		{
+			"name": "Invio nuovo messaggio",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer <TOKEN>",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"titolo\": \"Problema con il login\",\n    \"descrizione\": \"Non riesco ad accedere con le mie credenziali\",\n    \"categoria\": \"AUTENTICAZIONE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/tickets/11/messaggi",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"tickets",
+						"11",
+						"messaggi"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Elenco messaggi ticket",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer <TOKEN>",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/tickets/11/messaggi",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"tickets",
+						"11",
+						"messaggi"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
