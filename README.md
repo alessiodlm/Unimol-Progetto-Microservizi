@@ -29,7 +29,7 @@ Il microservizio è responsabile della gestione delle richieste di supporto da p
 | Componente             | Tecnologia / Framework       | Ruolo                                                                 |
 |------------------------|------------------------------|----------------------------------------------------------------------|
 | Framework Principale   | Spring Boot                  | Gestione REST API, configurazione, logica applicativa               |
-| Database               | MySQL 8                      | Memorizzazione dei ticket, utenti, messaggi e storico                |
+| Database               | Postgresql                      | Memorizzazione dei ticket, utenti, messaggi e storico                |
 | Documentazione API     | Swagger / Springdoc OpenAPI  | Generazione automatica e interattiva della documentazione REST      |
 | Messaggistica / Eventi | RabbitMQ                     | Invio asincrono di notifiche e comunicazione con altri microservizi  |
 ---
@@ -91,10 +91,10 @@ Il microservizio è responsabile della gestione delle richieste di supporto da p
 |------------------|-----------------------------------------------------|
 | id               | Identificatore univoco della modifica              |
 | ticket_id        | Riferimento al ticket associato (FK → Ticket)      |
-| changed_by       | ID dell’utente che ha effettuato la modifica       |
-| old_status       | Stato precedente del ticket                        |
-| new_status       | Nuovo stato del ticket                             |
-| change_date      | Data e ora della modifica                          |
+| modificatoDa       | ID dell’utente che ha effettuato la modifica       |
+| StatoPrecedente     | Stato precedente del ticket                        |
+| StatoSuccessivo       | Nuovo stato del ticket                             |
+| dataModifica      | Data e ora della modifica                          |
 | comment          | Commento associato alla modifica                   |
 
 #  API - Microservizio Help Desk
@@ -203,14 +203,5 @@ Il microservizio gestisce la creazione e la gestione di ticket di supporto, la m
 - **Endpoint**: `/api/v1/tickets/{ticketId}/storico`
 
 ---
-
-### 2. API interna per aggiornare lo stato delle richieste
-- **@func**: `addTicketHistory()`
-- **@param**: `TicketHistoryRequest historyRequest`
-- **@return**: `ResponseEntity<TicketHistoryResponse>`
-- **Metodo**: `POST`
-- **Endpoint**: `/api/v1/tickets/{ticketId}/storico`
-
-> 🔒 Uso interno da parte del servizio per tracciare modifiche di stato.
 
 
